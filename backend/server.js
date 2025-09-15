@@ -3,7 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const fetch = require("node-fetch");
 
 dotenv.config();
 
@@ -23,7 +22,7 @@ app.use(express.json());
 app.get("/api/news/top", async (req, res) => {
   try {
     const url = `https://newsapi.org/v2/top-headlines?country=us&pageSize=20&apiKey=${process.env.NEWS_API_KEY}`;
-    const response = await fetch(url);
+    const response = await fetch(url); // ✅ Node 18+ has fetch built-in
     const data = await response.json();
     res.json(data);
   } catch (err) {
