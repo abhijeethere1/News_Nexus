@@ -1,14 +1,14 @@
-const API_KEY = import.meta.env.VITE_NEWS_API_KEY; // fetch from .env
-const BASE_URL = "https://newsapi.org/v2";
+// frontend/src/services/newsService.js
+const API_URL = import.meta.env.VITE_API_URL; // from .env
 
 export async function fetchTopHeadlines() {
-  const res = await fetch(`${BASE_URL}/top-headlines?country=us&pageSize=20&apiKey=${API_KEY}`);
-  const data = await res.json();
-  return data.articles;
+  const res = await fetch(`${API_URL}/top`);
+  if (!res.ok) throw new Error("Failed to fetch top headlines");
+  return res.json();
 }
 
 export async function fetchCategoryNews(category) {
-  const res = await fetch(`${BASE_URL}/top-headlines?country=us&category=${category}&pageSize=20&apiKey=${API_KEY}`);
-  const data = await res.json();
-  return data.articles;
+  const res = await fetch(`${API_URL}/category/${category}`);
+  if (!res.ok) throw new Error("Failed to fetch category news");
+  return res.json();
 }
