@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "*",
+  origin: process.env.FRONTEND_URL || "*", // allow only your frontend in prod
   methods: ["GET", "POST", "DELETE"],
   credentials: true,
 }));
@@ -73,20 +73,3 @@ app.delete("/api/saved/:id", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`🚀 Server running on ${PORT}`));
-
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-
-app.get("/api/news/top", async (req, res) => {
-  try {
-    const response = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API_KEY}`
-    );
-    const data = await response.json();
-    res.json(data);
-  } catch (err) {
-    console.error("News fetch error:", err.message);
-    res.status(500).json({ error: "Failed to fetch news" });
-  }
-});
-
-
