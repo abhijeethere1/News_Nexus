@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5000/api/news";
+// frontend/src/services/articleService.js
+const API_URL = import.meta.env.VITE_API_URL + "/api/news";
 
 export async function saveNews(news) {
   const res = await fetch(`${API_URL}/save`, {
