@@ -1,19 +1,19 @@
 // frontend/src/pages/Home.jsx
 import { useEffect, useState } from "react";
-import { fetchTopHeadlines } from "../services/newsService"; // your existing news API service
+import { fetchCategoryNews, fetchTopHeadlines } from "../services/newsService"; // your existing news API service
 import { getSavedArticles } from "../services/articleService";
 import NewsCard from "../components/NewsCard";
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
-  const [savedNews, setSavedNews] = useState([]);
+  const [savedNews,setSavedNews] = useState([])
 
   const loadData = async () => {
     try {
       const headlines = await fetchTopHeadlines();
-      const saved = await getSavedArticles();
-      setArticles(headlines || []);
-      setSavedNews(saved || []);
+      const saved = await fetchCategoryNews();
+      setArticles(headlines);
+      setSavedNews(saved)
     } catch (err) {
       console.error("Load data error:", err);
     }
@@ -21,6 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     loadData();
+    console.log(articles)
   }, []);
 
   return (

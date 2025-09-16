@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Save article
-app.post("/api/saved", async (req, res) => {
+app.post("/api/save", async (req, res) => {
   try {
     const article = new Article(req.body);
     await article.save();
