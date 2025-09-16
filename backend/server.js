@@ -1,4 +1,3 @@
-// backend/server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -22,7 +21,7 @@ app.use(express.json());
 app.get("/api/news/top", async (req, res) => {
   try {
     const url = `https://newsapi.org/v2/top-headlines?country=us&pageSize=20&apiKey=${process.env.NEWS_API_KEY}`;
-    const response = await fetch(url); // ✅ Node 18+ has fetch built-in
+    const response = await fetch(url); // Node 18+ has fetch built-in
     const data = await response.json();
     res.json(data);
   } catch (err) {
@@ -69,8 +68,8 @@ const savedNewsSchema = new mongoose.Schema(
 
 const SavedNews = mongoose.model("SavedNews", savedNewsSchema);
 
-// Saved news routes
-app.post("/api/saved", async (req, res) => {
+// Saved news routes (rewritten to match frontend)
+app.post("/api/news/save", async (req, res) => {
   try {
     const { url } = req.body;
     if (!url) return res.status(400).json({ error: "url required" });
@@ -86,7 +85,7 @@ app.post("/api/saved", async (req, res) => {
   }
 });
 
-app.get("/api/saved", async (req, res) => {
+app.get("/api/news/saved", async (req, res) => {
   try {
     const list = await SavedNews.find().sort({ createdAt: -1 });
     res.json(list);
@@ -95,7 +94,7 @@ app.get("/api/saved", async (req, res) => {
   }
 });
 
-app.delete("/api/saved/:id", async (req, res) => {
+app.delete("/api/news/remove/:id", async (req, res) => {
   try {
     await SavedNews.findByIdAndDelete(req.params.id);
     res.json({ message: "deleted" });

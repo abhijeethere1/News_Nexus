@@ -10,7 +10,7 @@ async function request(url, options = {}) {
 }
 
 export async function saveArticle(article) {
-  return request(`${API_BASE}/api/saved`, {
+  return request(`${API_BASE}/saved`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(article),
@@ -18,9 +18,9 @@ export async function saveArticle(article) {
 }
 
 export async function getSavedArticles() {
-  return request(`${API_BASE}/api/saved`);
+  return request(`${API_BASE}/saved`);
 }
 
 export async function removeArticle(id) {
-  return request(`${API_BASE}/api/saved/${id}`, { method: "DELETE" });
+  return request(`${API_BASE}/saved/${id}`, { method: "DELETE" });
 }
